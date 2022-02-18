@@ -18,6 +18,7 @@ export default function App() {
       ...currentList,
       { key: Math.random().toString(), value: itemTitle },
     ]);
+    setIsVisible(false);
   };
 
   const deleteItemFromList = itemKey => {
@@ -26,14 +27,18 @@ export default function App() {
     })
   }
 
+  const cancelItemAdditionHandler = () => {
+    setIsVisible(false);
+  }
+
   return (
     <View style={styles.screen}>
 
-      <Button title="Create To-Do List" onPress={() => {
+      <Button title="Add Item" onPress={() => {
         setIsVisible(true)
       }} />
 
-      <ListInput visibility={isVisible} onAddItem={addItemToList} />
+      <ListInput visibility={isVisible} onAddItem={addItemToList} onCancel={cancelItemAdditionHandler} />
 
       <FlatList
         data={toDoList}
