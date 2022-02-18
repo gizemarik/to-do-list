@@ -1,11 +1,8 @@
 import { useState } from "react";
 import {
   StyleSheet,
-  Text,
   View,
-  TextInput,
   Button,
-  ScrollView,
   FlatList,
 } from "react-native";
 
@@ -14,6 +11,7 @@ import ListInput from "./components/ListInput";
 
 export default function App() {
   const [toDoList, setToDoList] = useState([]);
+  const [isVisible, setIsVisible] = useState(false);
 
   const addItemToList = (itemTitle) => {
     setToDoList((currentList) => [
@@ -30,7 +28,12 @@ export default function App() {
 
   return (
     <View style={styles.screen}>
-      <ListInput onAddItem={addItemToList} />
+
+      <Button title="Create To-Do List" onPress={() => {
+        setIsVisible(true)
+      }} />
+
+      <ListInput visibility={isVisible} onAddItem={addItemToList} />
 
       <FlatList
         data={toDoList}
