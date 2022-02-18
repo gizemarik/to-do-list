@@ -22,13 +22,19 @@ export default function App() {
     ]);
   };
 
+  const deleteItemFromList = itemKey => {
+    setToDoList((currentList) => {
+      return currentList.filter((item) => item.key !== itemKey);
+    })
+  }
+
   return (
     <View style={styles.screen}>
       <ListInput onAddItem={addItemToList} />
 
       <FlatList
         data={toDoList}
-        renderItem={(itemData) => <ListItem title={itemData.item.value} />}
+        renderItem={(itemData) => <ListItem itemKey={itemData.item.key} onDelete={deleteItemFromList} title={itemData.item.value} />}
       />
     </View>
   );
