@@ -1,19 +1,25 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, TextInput, Button, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button,
+  ScrollView,
+  FlatList,
+} from "react-native";
 
 export default function App() {
-
-  const [enteredItem, setEnteredItem] = useState('');
+  const [enteredItem, setEnteredItem] = useState("");
   const [toDoList, setToDoList] = useState([]);
-
 
   const itemInputHandler = (enteredText) => {
     setEnteredItem(enteredText);
-  }
+  };
 
   const addItemToList = () => {
-    setToDoList(currentList => [...currentList, enteredItem])
-  }
+    setToDoList((currentList) => [...currentList, {key: Math.random().toString(), value: enteredItem}]);
+  };
 
   return (
     <View style={styles.screen}>
@@ -25,13 +31,15 @@ export default function App() {
         />
         <Button title="ADD" onPress={addItemToList} />
       </View>
-      <ScrollView>
-        {toDoList.map((item) => 
-        <View key={item} style={styles.listItem}>
-          <Text>{item}</Text>
-        </View>        
-        )}
-      </ScrollView>
+
+        <FlatList
+          data={toDoList}
+          renderItem={(itemData) => (
+            <View style={styles.listItem}>
+              <Text>{itemData.item.value}</Text>
+            </View>
+          )}
+        />
     </View>
   );
 }
@@ -52,10 +60,10 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   listItem: {
-    padding:10,
-    backgroundColor: '#ccc',
-    borderColor: 'black',
+    padding: 10,
+    backgroundColor: "#ccc",
+    borderColor: "black",
     borderWidth: 1,
-    marginVertical:10
-  }
+    marginVertical: 10,
+  },
 });
