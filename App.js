@@ -9,6 +9,8 @@ import {
   FlatList,
 } from "react-native";
 
+import ListItem from "./components/ListItem";
+
 export default function App() {
   const [enteredItem, setEnteredItem] = useState("");
   const [toDoList, setToDoList] = useState([]);
@@ -35,9 +37,7 @@ export default function App() {
         <FlatList
           data={toDoList}
           renderItem={(itemData) => (
-            <View style={styles.listItem}>
-              <Text>{itemData.item.value}</Text>
-            </View>
+            <ListItem title={itemData.item.value}/>
           )}
         />
     </View>
@@ -58,12 +58,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     width: "80%",
-  },
-  listItem: {
-    padding: 10,
-    backgroundColor: "#ccc",
-    borderColor: "black",
-    borderWidth: 1,
-    marginVertical: 10,
-  },
+  }
 });
