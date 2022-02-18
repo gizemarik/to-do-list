@@ -1,16 +1,37 @@
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import { useState } from "react";
+import { StyleSheet, Text, View, TextInput, Button, ScrollView } from "react-native";
 
 export default function App() {
+
+  const [enteredItem, setEnteredItem] = useState('');
+  const [toDoList, setToDoList] = useState([]);
+
+
+  const itemInputHandler = (enteredText) => {
+    setEnteredItem(enteredText);
+  }
+
+  const addItemToList = () => {
+    setToDoList(currentList => [...currentList, enteredItem])
+  }
+
   return (
     <View style={styles.screen}>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Enter an item"
           style={styles.input}
+          onChangeText={itemInputHandler}
         />
-        <Button title="ADD" />
+        <Button title="ADD" onPress={addItemToList} />
       </View>
-      <View></View>
+      <ScrollView>
+        {toDoList.map((item) => 
+        <View key={item} style={styles.listItem}>
+          <Text>{item}</Text>
+        </View>        
+        )}
+      </ScrollView>
     </View>
   );
 }
@@ -29,5 +50,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     width: "80%",
+  },
+  listItem: {
+    padding:10,
+    backgroundColor: '#ccc',
+    borderColor: 'black',
+    borderWidth: 1,
+    marginVertical:10
   }
 });
